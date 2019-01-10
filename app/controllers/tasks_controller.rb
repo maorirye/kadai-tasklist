@@ -3,7 +3,8 @@ class TasksController < ApplicationController
   
   
   def index
-    @tasks = Task.all 
+    @tasks = Task.order(created_at: :desc).page(params[:page]).per(10)
+
   end
   
   def show
@@ -30,21 +31,24 @@ class TasksController < ApplicationController
   
   
   def edit
-  
+    set_task
   end
   
   def update
-    if 
-      flash[:success]='タスクは正常に更新されました'
+    binding.pry
+    set_task
+    if @task.update(task_params)
+      flash[:success]='Task は正常に更新されました'
       redirect_to @task
-   else
-     flash.now[:danger]
+    else
+     flash.now[:danger]='Task は更新されませんでした'
      render :edit
     end
   end
   
   
   def destroy
+    set_task
     @task.destroy
     
     flash[:success]='タスクは正常に削除されました'
