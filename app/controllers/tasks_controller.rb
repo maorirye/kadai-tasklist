@@ -35,7 +35,6 @@ class TasksController < ApplicationController
   end
   
   def update
-    binding.pry
     set_task
     if @task.update(task_params)
       flash[:success]='Task は正常に更新されました'
