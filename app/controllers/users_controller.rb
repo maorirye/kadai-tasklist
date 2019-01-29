@@ -6,6 +6,8 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+    @tasks = @user.tasks.order('created_at DESC').page(params[:page])
+    counts(@user)
   end
 
   def new
@@ -16,9 +18,11 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
 
     if @user.save
+      # Userがきちんと作成された場合、トップページにリダイレクトする
       flash[:success] = 'ユーザを登録しました。'
-      redirect_to @user
+      redirect_to login_path
     else
+      # validationなど、何らかの理由でUserの作成に失敗した場合、もう一度User作成画面を表示する
       flash.now[:danger] = 'ユーザの登録に失敗しました。'
       render :new
     end

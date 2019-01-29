@@ -7,11 +7,14 @@
       <div class="panel-body">
         <img class="media-object img-rounded img-responsive" src="<%= gravatar_url(@user, { size: 500 }) %>" alt="">
       </div>
+      <%= link_to '新規タスクの作成', new_task_path, class: "btn btn-primary" %>
     </div>
   </aside>
   <div class="col-xs-8">
     <ul class="nav nav-tabs nav-justified">
-      <li><a href="#">Tasks</a></li>
+      <li class="<%= 'active' if current_page?(user_path(@user)) %>"><%= link_to user_path(@user) do %>Tasks <span class="badge"><%= @count_tasks %></span><% end %></li>
     </ul>
+    <%= render 'tasks/tasks', tasks: @tasks %>
+    
   </div>
 </div>

@@ -1,12 +1,40 @@
 <% if logged_in? %>
-  <p>ログイン完了ユーザ: <%= current_user.name %></p>
+
+  <div class="row">
+    
+    <aside class="col-md-4">
+      <%= form_for(@task) do |f| %>
+        <% if @task.errors.any? %>
+          <div id="error_explanation">
+            <ul>
+              <% @task.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+        
+        <div class="form-group">
+          <h1>status</h1>
+          <%= f.text_area :status, class: 'form-control', rows: 5 %>
+          <h1>content</h1>
+          <%= f.text_area :content, class: 'form-control', rows: 5 %>
+        </div>
+        <%= f.submit 'Post', class: 'btn btn-primary btn-block' %>
+      <% end %>
+    </aside>
+    
+    <div class="col-xs-8">
+      <%= render 'tasks/tasks', tasks: @tasks %>
+    </div>
+  </div>
+  
+  
 <% else %>
   <div class="center jumbotron">
     <div class="text-center">
-      <h1>Welcome to the Tasklist</h1>
+      <h1>Welcome to the tasks</h1>
       <%= link_to 'Sign up now!', signup_path, class: 'btn btn-lg btn-primary' %>
     </div>
   </div>
 <% end %>
-
-
