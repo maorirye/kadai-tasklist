@@ -13,6 +13,7 @@
           <p><%=task.content %></p>
         <div>
           <%if current_user == task.user %>
+          <%= link_to "Detail",task_path(task.id), class:'btn btn-info btn-xs' %>
           <%= link_to "Delete",task, method: :delete, data: { confirm: "You sure?" }, class:'btn btn-danger btn-xs' %>
           <%= link_to "EDIT",edit_task_path(task.id), class:'btn btn-info btn-xs' %>
           <% end %>
